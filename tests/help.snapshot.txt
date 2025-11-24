@@ -1,0 +1,30 @@
+mycsv.sh script usage
+  [1m--file[0m, [1m-f[0m
+    path to CSV file, mandatory
+
+  [1m--hasheaders[0m, [1m-H[0m
+    use this option to denote that input has CSV headers in first row
+
+  [1m--outcolorder[0m, [1m-o[0m
+    numberr or names e.g. 1 2 username price 4
+
+  [1m--separator[0m, [1m-s[0m
+    can be a single character, can be string
+
+  [1m--format[0m, [1m-F[0m
+    your own format, to render columns inside it use \1, \2 etc .
+
+  [1m--validate[0m
+    prints this help and exits
+
+  [1m--version[0m, [1m-v[0m
+    print version and exit
+
+  [1m--help[0m, [1m-h[0m
+    print this help and exit
+
+    Examples:
+    mycsv.sh --file=data.csv --has-headers -o='1 2 3' -s=','
+
+    mycsv.sh -f='data.csv' --validate
+    
