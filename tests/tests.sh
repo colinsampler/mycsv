@@ -115,17 +115,32 @@ function test_regex_for_columns_amount_should_recognise_empty_values() {
     cut -d',' -f2- | \
     sed 's#0##g; s#1#a#g'
   ); do
-    actual="$(echo "$variant," | grep -oE '("[^"]+"|""|[^,]+),|,' | wc -l)"
+    actual="$(echo "$variant," | grep -oE '(".*?"|[^,]+),|,' | wc -l)"
     expected=4
     assertEquals $expected $actual
   done
 }
 
 function test_when_file_has_no_headers_and_has_empty_values_then_should_be_valid() {
-  mycsv.sh --file=$ROOT_PATH/data_with_empty_values_no_header.csv > /dev/null 2>&1
+  mycsv.sh --file=$ROOT_PATH/data_with_empty_values_no_header.csv --validate > /dev/null 2>&1
   actual_exit_status=$?
   expected=0
   assertEquals "$expected" "$actual_exit_status"
+}
+
+function test_when_file_has_empty_values_then_should_be_valid() {
+  mycsv.sh --file=$ROOT_PATH/data_with_empty_values.csv --validate > /dev/null 2>&1
+  actual_exit_status=$?
+  expected=0
+  assertEquals "$expected" "$actual_exit_status"
+}
+
+function test_when_file_has_empty_values_then_select_single_column_should_retrieve_proper_data() {
+  for i in $(seq 1 4); do
+    actual="$(mycsv.sh --file=$ROOT_PATH/data_with_empty_values.csv --o="$i")"
+    expected=$(cat $ROOT_PATH/data_with_empty_values_outcol_$i.csv)
+    assertEquals "$expected" "$actual"
+  done
 }
 
 # function test_when

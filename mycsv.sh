@@ -2,7 +2,7 @@
 
 ROOT_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 VERSION='0.2.0'
-CSV_SPLIT_RE='("[^"]+"|""|[^,]+),|,'
+CSV_SPLIT_RE='(".*?"|[^,]+),|,'
 
 source "${ROOT_PATH}/help.sh"
 
@@ -106,7 +106,7 @@ fi
 # remove first comma that is actually not added by String.join
 regex="$(seq 1 $columns_amount | \
   xargs | \
-  sed -E 's#[0-9]+[ ]?#\,("[^"]+"|""|[^,]+|())#g' | \
+  sed -E 's#[0-9]+[ ]?#\,(".*"|[^,]+|())#g' | \
   cut -c2-)"
 
 # Because above sed has two capturing groups I cannot have out order as 1 2 3 4 ... I need silently renumber it to 1 3 5 7 ... for user needs
